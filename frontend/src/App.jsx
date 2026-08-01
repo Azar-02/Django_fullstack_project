@@ -1,14 +1,11 @@
 import {
-
     BrowserRouter,
-
     Routes,
-
     Route
-
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -17,38 +14,36 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-function App(){
-
-    return(
-
+function App() {
+    return (
         <BrowserRouter>
 
-            <Navbar/>
+            <Navbar />
 
-            <div className="container mt-4">
+            <main className="container mt-4">
 
                 <Routes>
 
-                    <Route path="/" element={<Home/>}/>
+                    <Route path="/" element={<Home />} />
 
-                    <Route path="/products" element={<Products/>}/>
+                    <Route path="/products" element={<Products />} />
 
-                    <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/cart" element={<Cart />} />
 
-                    <Route path="/orders" element={<Orders/>}/>
+                    <Route path="/orders" element={<Orders />} />
 
-                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/login" element={<Login />} />
 
-                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/register" element={<Register />} />
 
                 </Routes>
 
-            </div>
+            </main>
+
+            <Footer />
 
         </BrowserRouter>
-
     );
-
 }
 
 export default App;
