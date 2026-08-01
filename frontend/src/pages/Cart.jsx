@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import api from "../api/axios";
 
 function Cart() {
@@ -10,9 +9,7 @@ function Cart() {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         fetchCart();
-
     }, []);
 
     const fetchCart = async () => {
@@ -23,9 +20,7 @@ function Cart() {
 
             setCart(response.data);
 
-        }
-
-        catch (error) {
+        } catch (error) {
 
             console.log(error);
 
@@ -37,31 +32,35 @@ function Cart() {
 
         if (quantity < 1) return;
 
-        await api.patch(
+        try {
 
-            `cart/items/${itemId}/`,
-
-            {
-
+            await api.patch(`cart/items/${itemId}/`, {
                 quantity,
+            });
 
-            }
+            fetchCart();
 
-        );
+        } catch (error) {
 
-        fetchCart();
+            console.log(error);
+
+        }
 
     };
 
     const removeItem = async (itemId) => {
 
-        await api.delete(
+        try {
 
-            `cart/items/${itemId}/delete/`
+            await api.delete(`cart/items/${itemId}/delete/`);
 
-        );
+            fetchCart();
 
-        fetchCart();
+        } catch (error) {
+
+            console.log(error);
+
+        }
 
     };
 
@@ -71,13 +70,11 @@ function Cart() {
 
             await api.post("orders/place/");
 
-            alert("Order Placed Successfully!");
+            alert("Order placed successfully!");
 
             navigate("/orders");
 
-        }
-
-        catch {
+        } catch {
 
             alert("Unable to place order.");
 
@@ -87,7 +84,24 @@ function Cart() {
 
     if (!cart) {
 
-        return <h3>Loading...</h3>;
+        return (
+
+            <div className="text-center mt-5">
+
+                <div
+                    className="spinner-border text-success"
+                    role="status"
+                />
+
+                <p className="mt-3">
+
+                    Loading Cart...
+
+                </p>
+
+            </div>
+
+        );
 
     }
 
@@ -97,15 +111,34 @@ function Cart() {
 
             <h2 className="mb-4">
 
-                Your Cart
+                🛒 Your Cart
 
             </h2>
 
             {cart.items.length === 0 ? (
 
-                <div className="alert alert-info">
+                <div className="text-center mt-5">
 
-                    Your cart is empty.
+                    <h3>
+
+                        Your Cart is Empty
+
+                    </h3>
+
+                    <p className="text-muted">
+
+                        Add some delicious tea and snacks.
+
+                    </p>
+
+                    <button
+                        className="btn btn-success"
+                        onClick={() => navigate("/products")}
+                    >
+
+                        Browse Menu
+
+                    </button>
 
                 </div>
 
@@ -117,67 +150,85 @@ function Cart() {
 
                         <div
                             key={item.id}
-                            className="card mb-3"
+                            className="card shadow-sm mb-3"
                         >
 
                             <div className="card-body">
 
-                                <h5>
+                                <div className="d-flex justify-content-between align-items-center">
 
-                                    {item.product_name}
+                                    <div>
 
-                                </h5>
+                                        <h5>
 
-                                <p>
+                                            {item.product_name}
 
-                                    ₹{item.price}
+                                        </h5>
 
-                                </p>
+                                        <p className="text-muted mb-1">
 
-                                <p>
+                                            Price : ₹{item.price}
 
-                                    Quantity : {item.quantity}
+                                        </p>
 
-                                </p>
+                                        <p>
 
-                                <p>
+                                            Subtotal : ₹{item.subtotal}
 
-                                    Subtotal : ₹{item.subtotal}
+                                        </p>
 
-                                </p>
+                                    </div>
 
-                                <button
-                                    className="btn btn-secondary me-2"
-                                    onClick={() =>
-                                        updateQuantity(
-                                            item.id,
-                                            item.quantity - 1
-                                        )
-                                    }
-                                >
-                                    -
-                                </button>
+                                    <div>
 
-                                <button
-                                    className="btn btn-secondary me-3"
-                                    onClick={() =>
-                                        updateQuantity(
-                                            item.id,
-                                            item.quantity + 1
-                                        )
-                                    }
-                                >
-                                    +
-                                </button>
+                                        <p>
 
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() =>
-                                        removeItem(item.id)
-                                    }
-                                >
-                                    Remove
-                                </button>
+                                            Quantity : {item.quantity}
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="mt-3">
+
+                                    <button
+                                        className="btn btn-secondary me-2"
+                                        onClick={() =>
+                                            updateQuantity(
+                                                item.id,
+                                                item.quantity - 1
+                                            )
+                                        }
+                                    >
+                                        -
+                                    </button>
+
+                                    <button
+                                        className="btn btn-secondary me-3"
+                                        onClick={() =>
+                                            updateQuantity(
+                                                item.id,
+                                                item.quantity + 1
+                                            )
+                                        }
+                                    >
+                                        +
+                                    </button>
+
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={() =>
+                                            removeItem(item.id)
+                                        }
+                                    >
+
+                                        Remove
+
+                                    </button>
+
+                                </div>
 
                             </div>
 
@@ -185,20 +236,24 @@ function Cart() {
 
                     ))}
 
-                    <h4>
+                    <div className="text-end mt-4">
 
-                        Total : ₹{cart.total}
+                        <h3>
 
-                    </h4>
+                            Total : ₹{cart.total}
 
-                    <button
-                        className="btn btn-success mt-3"
-                        onClick={placeOrder}
-                    >
+                        </h3>
 
-                        Place Order
+                        <button
+                            className="btn btn-success btn-lg mt-2"
+                            onClick={placeOrder}
+                        >
 
-                    </button>
+                            Place Order
+
+                        </button>
+
+                    </div>
 
                 </>
 

@@ -5,45 +5,104 @@ function Orders() {
 
     const [orders, setOrders] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+
         fetchOrders();
+
     }, []);
 
     const fetchOrders = async () => {
+
         try {
+
             const response = await api.get("orders/");
+
             setOrders(response.data);
+
         } catch (error) {
+
             console.log(error);
+
+        } finally {
+
+            setLoading(false);
+
         }
+
     };
 
-    if (orders.length === 0) {
+    if (loading) {
+
         return (
-            <div className="alert alert-info">
-                No orders found.
+
+            <div className="text-center mt-5">
+
+                <div
+                    className="spinner-border text-success"
+                    role="status"
+                />
+
+                <p className="mt-3">
+
+                    Loading Orders...
+
+                </p>
+
             </div>
+
         );
+
+    }
+
+    if (orders.length === 0) {
+
+        return (
+
+            <div className="text-center mt-5">
+
+                <h2>
+
+                    📦 No Orders Yet
+
+                </h2>
+
+                <p className="text-muted">
+
+                    Place your first order today.
+
+                </p>
+
+            </div>
+
+        );
+
     }
 
     return (
+
         <div>
 
             <h2 className="mb-4">
-                My Orders
+
+                📦 My Orders
+
             </h2>
 
             {orders.map((order) => (
 
                 <div
                     key={order.id}
-                    className="card mb-4"
+                    className="card shadow-sm mb-4"
                 >
 
                     <div className="card-header">
 
                         <strong>
+
                             Order #{order.id}
+
                         </strong>
 
                     </div>
@@ -52,7 +111,7 @@ function Orders() {
 
                         <p>
 
-                            <strong>Date:</strong>{" "}
+                            <strong>Date :</strong>{" "}
 
                             {new Date(
                                 order.created_at
@@ -65,25 +124,21 @@ function Orders() {
                             {order.items.map((item) => (
 
                                 <li
-                                    key={item.product_name}
+                                    key={`${order.id}-${item.product_name}`}
                                     className="list-group-item d-flex justify-content-between"
                                 >
 
                                     <span>
 
-                                        {item.product_name}
-
-                                        ×
-
-                                        {item.quantity}
+                                        {item.product_name} × {item.quantity}
 
                                     </span>
 
-                                    <span>
+                                    <strong>
 
                                         ₹{item.price}
 
-                                    </span>
+                                    </strong>
 
                                 </li>
 
@@ -91,11 +146,11 @@ function Orders() {
 
                         </ul>
 
-                        <h5>
+                        <h4 className="text-success">
 
                             Total : ₹{order.total}
 
-                        </h5>
+                        </h4>
 
                     </div>
 
@@ -104,6 +159,7 @@ function Orders() {
             ))}
 
         </div>
+
     );
 
 }
