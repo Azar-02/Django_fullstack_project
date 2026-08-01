@@ -10,8 +10,6 @@ Tea Palace allows users to browse tea and snack items, register/login using JWT 
 
 # 📸 Screenshots
 
-> Add screenshots after completing the project.
-
 | Home | Products |
 |------|----------|
 | ![](screenshots/home.png) | ![](screenshots/products.png) |
