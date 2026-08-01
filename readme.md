@@ -4,8 +4,6 @@ A simple full-stack Tea Shop web application built using **React**, **Django RES
 
 Tea Palace allows users to browse tea and snack items, register/login using JWT authentication, add products to a shopping cart, and place orders.
 
-> This project was built as a portfolio project to demonstrate full-stack development skills using React and Django.
-
 ---
 
 # 📸 Screenshots
