@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import api from "../api/axios";
 
@@ -7,12 +7,11 @@ function Login() {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState({
-
         username: "",
-
         password: "",
-
     });
 
     const handleChange = (e) => {
@@ -31,41 +30,50 @@ function Login() {
 
         e.preventDefault();
 
+        setLoading(true);
+
         try {
 
             const response = await api.post(
-
                 "auth/login/",
-
                 form
-
             );
 
             localStorage.setItem(
-
                 "access",
-
                 response.data.access
-
             );
 
             localStorage.setItem(
-
                 "refresh",
-
                 response.data.refresh
-
             );
 
-            alert("Login Successful");
+            alert("Login Successful!");
 
             navigate("/products");
 
         }
 
-        catch {
+        catch (error) {
 
-            alert("Invalid Credentials");
+            if (error.response?.data?.detail) {
+
+                alert(error.response.data.detail);
+
+            } else {
+
+                alert("Invalid Username or Password.");
+
+            }
+
+            console.log(error);
+
+        }
+
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -73,38 +81,92 @@ function Login() {
 
     return (
 
-        <div className="col-md-5 mx-auto">
+        <div className="row justify-content-center">
 
-            <h2 className="mb-4">
+            <div className="col-md-6 col-lg-5">
 
-                Login
+                <div className="card shadow border-0">
 
-            </h2>
+                    <div className="card-body p-4">
 
-            <form onSubmit={handleSubmit}>
+                        <h2 className="text-center mb-4">
 
-                <input
-                    className="form-control mb-3"
-                    name="username"
-                    placeholder="Username"
-                    onChange={handleChange}
-                />
+                            Welcome Back
 
-                <input
-                    className="form-control mb-3"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
+                        </h2>
 
-                <button className="btn btn-primary">
+                        <form onSubmit={handleSubmit}>
 
-                    Login
+                            <div className="mb-3">
 
-                </button>
+                                <label className="form-label">
 
-            </form>
+                                    Username
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="username"
+                                    value={form.username}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="mb-4">
+
+                                <label className="form-label">
+
+                                    Password
+
+                                </label>
+
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            <button
+                                className="btn btn-success w-100"
+                                disabled={loading}
+                            >
+
+                                {loading
+                                    ? "Signing In..."
+                                    : "Login"}
+
+                            </button>
+
+                        </form>
+
+                        <hr />
+
+                        <p className="text-center mb-0">
+
+                            Don't have an account?{" "}
+
+                            <Link to="/register">
+
+                                Register
+
+                            </Link>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 

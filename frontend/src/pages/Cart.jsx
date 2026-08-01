@@ -1,16 +1,30 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import api from "../api/axios";
 
 function Cart() {
 
-    const [cart, setCart] = useState(null);
-
     const navigate = useNavigate();
 
+    const [cart, setCart] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+
         fetchCart();
+
     }, []);
+
+    const handleUnauthorized = () => {
+
+        localStorage.clear();
+
+        alert("Your session has expired. Please login again.");
+
+        navigate("/login");
+
+    };
 
     const fetchCart = async () => {
 
@@ -20,9 +34,28 @@ function Cart() {
 
             setCart(response.data);
 
-        } catch (error) {
+        }
+
+        catch (error) {
+
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+
+                handleUnauthorized();
+
+                return;
+
+            }
 
             console.log(error);
+
+        }
+
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -34,13 +67,32 @@ function Cart() {
 
         try {
 
-            await api.patch(`cart/items/${itemId}/`, {
-                quantity,
-            });
+            await api.patch(
+
+                `cart/items/${itemId}/`,
+
+                {
+                    quantity,
+                }
+
+            );
 
             fetchCart();
 
-        } catch (error) {
+        }
+
+        catch (error) {
+
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+
+                handleUnauthorized();
+
+                return;
+
+            }
 
             console.log(error);
 
@@ -52,11 +104,28 @@ function Cart() {
 
         try {
 
-            await api.delete(`cart/items/${itemId}/delete/`);
+            await api.delete(
+
+                `cart/items/${itemId}/delete/`
+
+            );
 
             fetchCart();
 
-        } catch (error) {
+        }
+
+        catch (error) {
+
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+
+                handleUnauthorized();
+
+                return;
+
+            }
 
             console.log(error);
 
@@ -74,30 +143,79 @@ function Cart() {
 
             navigate("/orders");
 
-        } catch {
+        }
+
+        catch (error) {
+
+            if (
+                error.response?.status === 401 ||
+                error.response?.status === 403
+            ) {
+
+                handleUnauthorized();
+
+                return;
+
+            }
 
             alert("Unable to place order.");
+
+            console.log(error);
 
         }
 
     };
 
-    if (!cart) {
+    if (loading) {
 
         return (
 
-            <div className="text-center mt-5">
+            <div className="text-center py-5">
 
                 <div
                     className="spinner-border text-success"
                     role="status"
-                />
+                >
+                </div>
 
                 <p className="mt-3">
 
                     Loading Cart...
 
                 </p>
+
+            </div>
+
+        );
+
+    }
+
+    if (!cart || cart.items.length === 0) {
+
+        return (
+
+            <div className="text-center py-5">
+
+                <h2 className="mb-4">
+
+                    🛒 Your Cart
+
+                </h2>
+
+                <div className="alert alert-info">
+
+                    Your cart is empty.
+
+                </div>
+
+                <button
+                    className="btn btn-success mt-3"
+                    onClick={() => navigate("/products")}
+                >
+
+                    Continue Shopping
+
+                </button>
 
             </div>
 
@@ -115,149 +233,110 @@ function Cart() {
 
             </h2>
 
-            {cart.items.length === 0 ? (
+            {
 
-                <div className="text-center mt-5">
+                cart.items.map((item) => (
 
-                    <h3>
-
-                        Your Cart is Empty
-
-                    </h3>
-
-                    <p className="text-muted">
-
-                        Add some delicious tea and snacks.
-
-                    </p>
-
-                    <button
-                        className="btn btn-success"
-                        onClick={() => navigate("/products")}
+                    <div
+                        key={item.id}
+                        className="card shadow-sm mb-3"
                     >
 
-                        Browse Menu
+                        <div className="card-body">
 
-                    </button>
+                            <h5>
 
-                </div>
+                                {item.product_name}
 
-            ) : (
+                            </h5>
 
-                <>
+                            <p className="mb-2">
 
-                    {cart.items.map((item) => (
+                                Price : ₹{item.price}
 
-                        <div
-                            key={item.id}
-                            className="card shadow-sm mb-3"
-                        >
+                            </p>
 
-                            <div className="card-body">
+                            <p className="mb-2">
 
-                                <div className="d-flex justify-content-between align-items-center">
+                                Quantity : {item.quantity}
 
-                                    <div>
+                            </p>
 
-                                        <h5>
+                            <p>
 
-                                            {item.product_name}
+                                <strong>
 
-                                        </h5>
+                                    Subtotal : ₹{item.subtotal}
 
-                                        <p className="text-muted mb-1">
+                                </strong>
 
-                                            Price : ₹{item.price}
+                            </p>
 
-                                        </p>
+                            <button
+                                className="btn btn-secondary me-2"
+                                onClick={() =>
+                                    updateQuantity(
+                                        item.id,
+                                        item.quantity - 1
+                                    )
+                                }
+                            >
 
-                                        <p>
+                                -
 
-                                            Subtotal : ₹{item.subtotal}
+                            </button>
 
-                                        </p>
+                            <button
+                                className="btn btn-secondary me-3"
+                                onClick={() =>
+                                    updateQuantity(
+                                        item.id,
+                                        item.quantity + 1
+                                    )
+                                }
+                            >
 
-                                    </div>
+                                +
 
-                                    <div>
+                            </button>
 
-                                        <p>
+                            <button
+                                className="btn btn-danger"
+                                onClick={() =>
+                                    removeItem(item.id)
+                                }
+                            >
 
-                                            Quantity : {item.quantity}
+                                Remove
 
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                                <div className="mt-3">
-
-                                    <button
-                                        className="btn btn-secondary me-2"
-                                        onClick={() =>
-                                            updateQuantity(
-                                                item.id,
-                                                item.quantity - 1
-                                            )
-                                        }
-                                    >
-                                        -
-                                    </button>
-
-                                    <button
-                                        className="btn btn-secondary me-3"
-                                        onClick={() =>
-                                            updateQuantity(
-                                                item.id,
-                                                item.quantity + 1
-                                            )
-                                        }
-                                    >
-                                        +
-                                    </button>
-
-                                    <button
-                                        className="btn btn-danger"
-                                        onClick={() =>
-                                            removeItem(item.id)
-                                        }
-                                    >
-
-                                        Remove
-
-                                    </button>
-
-                                </div>
-
-                            </div>
+                            </button>
 
                         </div>
 
-                    ))}
-
-                    <div className="text-end mt-4">
-
-                        <h3>
-
-                            Total : ₹{cart.total}
-
-                        </h3>
-
-                        <button
-                            className="btn btn-success btn-lg mt-2"
-                            onClick={placeOrder}
-                        >
-
-                            Place Order
-
-                        </button>
-
                     </div>
 
-                </>
+                ))
 
-            )}
+            }
+
+            <div className="mt-4">
+
+                <h3>
+
+                    Total : ₹{cart.total}
+
+                </h3>
+
+                <button
+                    className="btn btn-success mt-3"
+                    onClick={placeOrder}
+                >
+
+                    Place Order
+
+                </button>
+
+            </div>
 
         </div>
 

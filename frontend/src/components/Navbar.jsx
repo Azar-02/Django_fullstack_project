@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Navbar() {
 
@@ -8,75 +8,147 @@ function Navbar() {
 
     const logout = () => {
 
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
+        const confirmLogout = window.confirm(
+            "Are you sure you want to logout?"
+        );
+
+        if (!confirmLogout) return;
+
+        localStorage.clear();
 
         navigate("/login");
 
     };
 
+    const navClass = ({ isActive }) =>
+        isActive
+            ? "nav-link fw-semibold text-warning"
+            : "nav-link text-white";
+
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
 
             <div className="container">
 
-                <Link className="navbar-brand" to="/">
+                <NavLink
+                    to="/"
+                    className="navbar-brand fw-bold fs-4"
+                >
                     🍵 Tea Palace
-                </Link>
+                </NavLink>
 
-                <div className="navbar-nav ms-auto">
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-                    <Link className="nav-link" to="/">
-                        Home
-                    </Link>
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarNav"
+                >
 
-                    <Link className="nav-link" to="/products">
-                        Products
-                    </Link>
+                    <ul className="navbar-nav ms-auto align-items-lg-center">
 
-                    {token ? (
-                        <>
+                        <li className="nav-item">
 
-                            <Link
-                                className="nav-link"
-                                to="/cart"
+                            <NavLink
+                                to="/"
+                                className={navClass}
                             >
-                                Cart
-                            </Link>
+                                Home
+                            </NavLink>
 
-                            <Link
-                                className="nav-link"
-                                to="/orders"
-                            >
-                                Orders
-                            </Link>
+                        </li>
 
-                            <button
-                                className="btn btn-link nav-link"
-                                onClick={logout}
-                            >
-                                Logout
-                            </button>
+                        <li className="nav-item">
 
-                        </>
-                    ) : (
-                        <>
-                            <Link
-                                className="nav-link"
-                                to="/login"
+                            <NavLink
+                                to="/products"
+                                className={navClass}
                             >
-                                Login
-                            </Link>
+                                🍵 Menu
+                            </NavLink>
 
-                            <Link
-                                className="nav-link"
-                                to="/register"
-                            >
-                                Register
-                            </Link>
-                        </>
-                    )}
+                        </li>
+
+                        {token ? (
+
+                            <>
+
+                                <li className="nav-item">
+
+                                    <NavLink
+                                        to="/cart"
+                                        className={navClass}
+                                    >
+                                        🛒 Cart
+                                    </NavLink>
+
+                                </li>
+
+                                <li className="nav-item">
+
+                                    <NavLink
+                                        to="/orders"
+                                        className={navClass}
+                                    >
+                                        📦 Orders
+                                    </NavLink>
+
+                                </li>
+
+                                <li className="nav-item ms-lg-3 mt-2 mt-lg-0">
+
+                                    <button
+                                        className="btn btn-outline-warning btn-sm px-3"
+                                        onClick={logout}
+                                    >
+                                        Logout
+                                    </button>
+
+                                </li>
+
+                            </>
+
+                        ) : (
+
+                            <>
+
+                                <li className="nav-item">
+
+                                    <NavLink
+                                        to="/login"
+                                        className={navClass}
+                                    >
+                                        Login
+                                    </NavLink>
+
+                                </li>
+
+                                <li className="nav-item">
+
+                                    <NavLink
+                                        to="/register"
+                                        className={navClass}
+                                    >
+                                        Register
+                                    </NavLink>
+
+                                </li>
+
+                            </>
+
+                        )}
+
+                    </ul>
 
                 </div>
 

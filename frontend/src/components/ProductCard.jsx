@@ -2,52 +2,63 @@ function ProductCard({ product, onAddToCart }) {
 
     return (
 
-        <div className="col-md-4 mb-4">
+        <div className="col-lg-4 col-md-6 mb-4">
 
-            <div className="card h-100 shadow-sm">
+            <div className="card h-100 shadow-sm border-0">
 
                 <img
                     src={product.image}
                     className="card-img-top"
                     alt={product.name}
                     style={{
-                        height: "250px",
+                        height: "230px",
                         objectFit: "cover",
                     }}
                 />
 
                 <div className="card-body d-flex flex-column">
 
-                    <span className="badge bg-success mb-2">
+                    <span className="badge bg-success align-self-start mb-2">
+
                         {product.category_name}
+
                     </span>
 
-                    <h4>{product.name}</h4>
+                    <h5 className="fw-bold">
 
-                    <p className="text-muted">
-
-                        Freshly prepared and served with love.
-
-                    </p>
-
-                    <h5 className="text-success">
-
-                        ₹{product.price}
+                        {product.name}
 
                     </h5>
 
-                    <p>
+                    <p className="text-muted small mb-3">
 
-                        ⭐⭐⭐⭐⭐
+                        Freshly prepared using quality ingredients.
+                        Perfect with a hot cup of tea.
 
                     </p>
 
+                    <div className="mb-3">
+
+                        <span className="text-warning fs-5">
+
+                            ★★★★★
+
+                        </span>
+
+                    </div>
+
+                    <h4 className="text-success fw-bold mb-3">
+
+                        ₹{product.price}
+
+                    </h4>
+
                     <button
-                        className="btn btn-success mt-auto"
+                        className="btn btn-success mt-auto w-100"
                         onClick={() => onAddToCart(product.id)}
                     >
 
-                        Add To Cart
+                        🛒 Add To Cart
 
                     </button>
 

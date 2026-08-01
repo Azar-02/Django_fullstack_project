@@ -1,12 +1,16 @@
 function Footer() {
     return (
-        <footer className="bg-dark text-white text-center py-3 mt-5">
-            <div className="container">
-                <p className="mb-0">
-                    © 2026 Tea Palace | Built with React + Django REST Framework
-                </p>
+
+        <footer className="bg-dark text-white py-3">
+
+            <div className="container text-center">
+
+                © 2026 Tea Palace | Built with React + Django REST Framework
+
             </div>
+
         </footer>
+
     );
 }
 

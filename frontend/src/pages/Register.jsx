@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import api from "../api/axios";
 
@@ -7,14 +7,12 @@ function Register() {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState({
-
         username: "",
-
         email: "",
-
         password: "",
-
     });
 
     const handleChange = (e) => {
@@ -33,6 +31,8 @@ function Register() {
 
         e.preventDefault();
 
+        setLoading(true);
+
         try {
 
             await api.post(
@@ -40,7 +40,7 @@ function Register() {
                 form
             );
 
-            alert("Registration Successful");
+            alert("Registration Successful!");
 
             navigate("/login");
 
@@ -48,9 +48,27 @@ function Register() {
 
         catch (error) {
 
-            alert("Registration Failed");
+            if (error.response?.data) {
+
+                alert(
+                    Object.values(error.response.data)
+                        .flat()
+                        .join("\n")
+                );
+
+            } else {
+
+                alert("Registration Failed.");
+
+            }
 
             console.log(error);
+
+        }
+
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -58,47 +76,111 @@ function Register() {
 
     return (
 
-        <div className="col-md-5 mx-auto">
+        <div className="row justify-content-center">
 
-            <h2 className="mb-4">
+            <div className="col-md-6 col-lg-5">
 
-                Register
+                <div className="card shadow border-0">
 
-            </h2>
+                    <div className="card-body p-4">
 
-            <form onSubmit={handleSubmit}>
+                        <h2 className="text-center mb-4">
 
-                <input
-                    className="form-control mb-3"
-                    name="username"
-                    placeholder="Username"
-                    onChange={handleChange}
-                />
+                            Create Account
 
-                <input
-                    className="form-control mb-3"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                />
+                        </h2>
 
-                <input
-                    className="form-control mb-3"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
+                        <form onSubmit={handleSubmit}>
 
-                <button
-                    className="btn btn-success"
-                >
+                            <div className="mb-3">
 
-                    Register
+                                <label className="form-label">
 
-                </button>
+                                    Username
 
-            </form>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="username"
+                                    value={form.username}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="mb-3">
+
+                                <label className="form-label">
+
+                                    Email
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    name="email"
+                                    value={form.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            <div className="mb-4">
+
+                                <label className="form-label">
+
+                                    Password
+
+                                </label>
+
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                            <button
+                                className="btn btn-success w-100"
+                                disabled={loading}
+                            >
+
+                                {loading
+                                    ? "Creating Account..."
+                                    : "Register"}
+
+                            </button>
+
+                        </form>
+
+                        <hr />
+
+                        <p className="text-center mb-0">
+
+                            Already have an account?{" "}
+
+                            <Link to="/login">
+
+                                Login
+
+                            </Link>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
