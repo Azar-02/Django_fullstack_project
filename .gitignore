@@ -1,26 +1,8 @@
-# Python
-__pycache__/
-*.py[cod]
-*.sqlite3
-
-# Virtual Environment
 venv/
-
-# Environment variables
 .env
-
-# Django
+__pycache__/
+*.pyc
 media/
-staticfiles/
 
-# Node
-frontend/node_modules/
-
-# Logs
-*.log
-
-# VS Code
-.vscode/
-
-# macOS
-.DS_Store
+node_modules/
+dist/
