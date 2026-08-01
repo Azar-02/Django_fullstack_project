@@ -8,6 +8,7 @@ from .models import CartItem
 from .serializers import (
     AddToCartSerializer,
     CartSerializer,
+    UpdateCartItemSerializer,
 )
 from .utils import get_or_create_cart
 
