@@ -1,0 +1,203 @@
+
+.floating-ai-container {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 1050;
+}
+
+.floating-ai-button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: #198754;
+    color: white;
+    font-size: 26px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.floating-ai-button:hover {
+    transform: scale(1.08);
+}
+
+.floating-ai-window {
+    width: 360px;
+    height: 500px;
+    max-height: calc(100vh - 110px);
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.floating-ai-header {
+    background: #212529;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.floating-ai-body {
+    flex: 1;
+    padding: 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-message {
+    padding: 10px 13px;
+    border-radius: 12px;
+    max-width: 90%;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.ai-bot-message {
+    align-self: flex-start;
+    background: #f1f3f5;
+    color: #212529;
+}
+
+.ai-user-message {
+    align-self: flex-end;
+    background: #198754;
+    color: white;
+}
+
+.ai-products,
+.ai-confirmation {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.ai-product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.ai-product-item:last-child {
+    border-bottom: none;
+}
+
+.ai-product-name {
+    font-weight: 500;
+    color: #212529;
+    overflow-wrap: anywhere;
+}
+
+.ai-product-price {
+    color: #198754;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+
+.floating-ai-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #dee2e6;
+}
+
+.floating-ai-input input {
+    min-width: 0;
+    flex: 1;
+    padding: 9px;
+    border: 1px solid #ced4da;
+    border-radius: 7px;
+    outline: none;
+}
+
+.floating-ai-input button {
+    background: #198754;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 13px;
+}
+
+.floating-ai-input button:disabled {
+    opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+    .floating-ai-container {
+        right: 12px;
+        bottom: 15px;
+    }
+
+    .floating-ai-window {
+        width: calc(100vw - 24px);
+        height: min(500px, calc(100vh - 100px));
+    }
+}
+
+
+/* Markdown tables inside floating chat */
+.ai-bot-message .table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ai-bot-message table {
+    min-width: 480px;
+    width: 100%;
+    table-layout: auto;
+}
+
+.ai-bot-message th,
+.ai-bot-message td {
+    padding: 8px;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.ai-bot-message th:first-child,
+.ai-bot-message td:first-child {
+    min-width: 90px;
+}
+
+.ai-bot-message th:last-child,
+.ai-bot-message td:last-child {
+    min-width: 75px;
+    white-space: nowrap;
+}
+
+/* Keep product names and prices aligned */
+.ai-product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.ai-product-name {
+    flex: 1;
+    min-width: 0;
+}
+
+.ai-product-price {
+    white-space: nowrap;
+    color: #198754;
+}

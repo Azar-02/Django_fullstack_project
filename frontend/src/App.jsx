@@ -9,6 +9,8 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import AIShopping from "./pages/AIShopping";
+import FloatingAssistant from "./components/FloatingAssistant";
 
 function App() {
     return (
@@ -27,7 +29,9 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="*" element={<NotFound />} />
+                        <Route path="/ai-shopping" element={<AIShopping />} />
                     </Routes>
+                    <FloatingAssistant />
 
                 </main>
 
