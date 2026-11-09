@@ -1,0 +1,241 @@
+
+/* HOME PAGE */
+
+.home-page {
+    color: #29251f;
+    padding-bottom: 30px;
+}
+
+/* HERO */
+
+.home-hero {
+    min-height: 500px;
+    padding: 65px 7%;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background:
+        linear-gradient(90deg, rgba(20, 18, 14, 0.88), rgba(20, 18, 14, 0.25)),
+        url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600");
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.home-hero-content {
+    max-width: 650px;
+    animation: homeFadeUp 0.8s ease;
+}
+
+.home-eyebrow {
+    display: inline-block;
+    color: #e9c887;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.home-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 22px;
+}
+
+.home-hero p {
+    color: #f1eee8;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 550px;
+}
+
+.home-btn-primary {
+    background: #198754;
+    border: 1px solid #198754;
+    color: white;
+    padding: 13px 25px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.home-btn-primary:hover {
+    background: #146c43;
+    border-color: #146c43;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.home-btn-outline {
+    border: 1px solid white;
+    color: white;
+    padding: 13px 25px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.home-btn-outline:hover {
+    background: white;
+    color: #212529;
+}
+
+/* SECTION HEADINGS */
+
+.home-section {
+    margin-top: 75px;
+}
+
+.home-section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.home-section-heading span {
+    color: #198754;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.home-section-heading h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 750;
+    margin-top: 10px;
+}
+
+.home-section-heading p {
+    color: #777;
+    margin-top: 10px;
+}
+
+/* CATEGORY CARDS */
+
+.home-category-card {
+    background: white;
+    border: 1px solid #eee9e1;
+    border-radius: 16px;
+    padding: 32px 24px;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.home-category-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.09);
+}
+
+.home-category-icon {
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #f1f6ed;
+    font-size: 38px;
+}
+
+.home-category-card h4 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.home-category-card p {
+    color: #777;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* AI FEATURE */
+
+.home-ai-section {
+    margin-top: 75px;
+    padding: 48px;
+    border-radius: 18px;
+    background: #212b25;
+    color: white;
+}
+
+.home-ai-section h2 {
+    font-weight: 750;
+    margin-bottom: 15px;
+}
+
+.home-ai-section p {
+    color: #d5ddd7;
+    line-height: 1.8;
+}
+
+.home-ai-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+/* WHY CHOOSE US */
+
+.home-benefits {
+    margin-top: 75px;
+    text-align: center;
+}
+
+.home-benefit {
+    padding: 20px;
+}
+
+.home-benefit h5 {
+    font-weight: 700;
+    margin: 12px 0;
+}
+
+.home-benefit p {
+    color: #777;
+    line-height: 1.7;
+}
+
+.home-benefit-icon {
+    font-size: 32px;
+}
+
+/* ANIMATION */
+
+@keyframes homeFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    .home-hero {
+        min-height: 430px;
+        padding: 40px 25px;
+        background-position: center;
+    }
+
+    .home-hero p {
+        font-size: 1rem;
+    }
+
+    .home-section {
+        margin-top: 50px;
+    }
+
+    .home-ai-section {
+        padding: 30px 22px;
+        text-align: center;
+    }
+}

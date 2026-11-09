@@ -18,7 +18,8 @@ function Orders() {
 
     const handleUnauthorized = () => {
 
-        localStorage.clear();
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
 
         alert("Your session has expired. Please login again.");
 
@@ -147,7 +148,7 @@ function Orders() {
 
                             <span className="badge bg-success">
 
-                                Completed
+                                Order Placed
 
                             </span>
 

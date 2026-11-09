@@ -1,0 +1,157 @@
+
+/* MENU PAGE */
+
+.menu-page {
+    color: #29251f;
+}
+
+.menu-hero {
+    background: linear-gradient(120deg, #202c24, #354b3c);
+    color: white;
+    padding: 38px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+}
+
+.menu-hero h1 {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.menu-hero p {
+    color: #d7e1d9;
+    margin-bottom: 0;
+}
+
+/* SEARCH AND FILTER */
+
+.menu-toolbar {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.menu-search {
+    flex: 1;
+    min-width: 220px;
+    padding: 12px 16px;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    outline: none;
+}
+
+.menu-search:focus,
+.menu-filter:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.1);
+}
+
+.menu-filter {
+    min-width: 180px;
+    padding: 12px;
+    border: 1px solid #dedede;
+    border-radius: 9px;
+    background: white;
+}
+
+/* PRODUCT CARDS */
+
+.menu-product-card {
+    height: 100%;
+    background: white;
+    border: 1px solid #eee9e1;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.menu-product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+.menu-product-image {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    background: #f5f5f5;
+}
+
+.menu-product-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.menu-product-category {
+    color: #198754;
+    background: #edf6ef;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    align-self: flex-start;
+    margin-bottom: 12px;
+}
+
+.menu-product-name {
+    font-weight: 750;
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.menu-product-description {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.menu-product-price {
+    color: #198754;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 12px 0 17px;
+}
+
+.menu-add-button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #198754;
+    color: white;
+    font-weight: 650;
+    transition: background 0.2s ease;
+}
+
+.menu-add-button:hover {
+    background: #146c43;
+}
+
+.menu-add-button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.menu-empty {
+    text-align: center;
+    padding: 55px 20px;
+    color: #777;
+}
+
+@media (max-width: 576px) {
+    .menu-hero {
+        padding: 28px 22px;
+    }
+
+    .menu-filter {
+        width: 100%;
+    }
+
+    .menu-product-image {
+        height: 210px;
+    }
+}

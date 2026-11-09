@@ -1,65 +1,59 @@
+
 function ProductCard({ product, onAddToCart }) {
-
     return (
+        <div className="col-lg-4 col-md-6">
 
-        <div className="col-lg-4 col-md-6 mb-4">
+            <div className="menu-product-card">
 
-            <div className="card h-100 shadow-sm border-0">
+                {product.image && (
+                    <img
+                        src={product.image}
+                        className="menu-product-image"
+                        alt={product.name}
+                    />
+                )}
 
-                <img
-                    src={product.image}
-                    className="card-img-top"
-                    alt={product.name}
-                    style={{
-                        height: "230px",
-                        objectFit: "cover",
-                    }}
-                />
+                <div className="menu-product-content">
 
-                <div className="card-body d-flex flex-column">
-
-                    <span className="badge bg-success align-self-start mb-2">
-
-                        {product.category_name}
-
+                    <span className="menu-product-category">
+                        {product.category_name || "Menu"}
                     </span>
 
-                    <h5 className="fw-bold">
-
+                    <h5 className="menu-product-name">
                         {product.name}
-
                     </h5>
 
-                    <p className="text-muted small mb-3">
-
-                        Freshly prepared using quality ingredients.
-                        Perfect with a hot cup of tea.
-
+                    <p className="menu-product-description">
+                        {product.description ||
+                            "A delicious Tea Palace favourite."}
                     </p>
 
-                    <div className="mb-3">
+                    <div className="d-flex justify-content-between align-items-center">
 
-                        <span className="text-warning fs-5">
-
-                            ★★★★★
-
+                        <span
+                            className={`badge ${
+                                product.available
+                                    ? "bg-success"
+                                    : "bg-secondary"
+                            }`}
+                        >
+                            {product.available
+                                ? "Available"
+                                : "Currently Unavailable"}
                         </span>
 
                     </div>
 
-                    <h4 className="text-success fw-bold mb-3">
-
+                    <div className="menu-product-price">
                         ₹{product.price}
-
-                    </h4>
+                    </div>
 
                     <button
-                        className="btn btn-success mt-auto w-100"
+                        className="menu-add-button"
                         onClick={() => onAddToCart(product.id)}
+                        disabled={!product.available}
                     >
-
-                        🛒 Add To Cart
-
+                        🛒 Add to Cart
                     </button>
 
                 </div>
@@ -67,9 +61,7 @@ function ProductCard({ product, onAddToCart }) {
             </div>
 
         </div>
-
     );
-
 }
 
 export default ProductCard;
