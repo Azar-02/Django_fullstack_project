@@ -1,23 +1,24 @@
+
 import { NavLink, useNavigate } from "react-router-dom";
 
 function Navbar() {
-
     const navigate = useNavigate();
 
     const token = localStorage.getItem("access");
+    const username = localStorage.getItem("username") || "User";
 
     const logout = () => {
-
         const confirmLogout = window.confirm(
             "Are you sure you want to logout?"
         );
 
         if (!confirmLogout) return;
 
-        localStorage.clear();
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        localStorage.removeItem("username");
 
         navigate("/login");
-
     };
 
     const navClass = ({ isActive }) =>
@@ -26,7 +27,6 @@ function Navbar() {
             : "nav-link text-white";
 
     return (
-
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
 
             <div className="container">
@@ -58,53 +58,84 @@ function Navbar() {
                     <ul className="navbar-nav ms-auto align-items-lg-center">
 
                         <li className="nav-item">
-
                             <NavLink
                                 to="/"
                                 className={navClass}
                             >
                                 Home
                             </NavLink>
-
                         </li>
 
                         <li className="nav-item">
-
                             <NavLink
                                 to="/products"
                                 className={navClass}
                             >
                                 🍵 Menu
                             </NavLink>
+                        </li>
 
+                        <li className="nav-item">
+                            <NavLink
+                                to="/ai-shopping"
+                                className={navClass}
+                            >
+                                🤖 AI Shopping
+                            </NavLink>
                         </li>
 
                         {token ? (
-
                             <>
 
                                 <li className="nav-item">
-
                                     <NavLink
                                         to="/cart"
                                         className={navClass}
                                     >
                                         🛒 Cart
                                     </NavLink>
-
                                 </li>
 
                                 <li className="nav-item">
-
                                     <NavLink
                                         to="/orders"
                                         className={navClass}
                                     >
                                         📦 Orders
                                     </NavLink>
+                                </li>
+
+                                {/* Logged-in User Profile */}
+                                <li className="nav-item ms-lg-3 mt-2 mt-lg-0">
+
+                                    <div className="d-flex align-items-center gap-2 text-white">
+
+                                        <div
+                                            className="rounded-circle bg-success d-flex align-items-center justify-content-center"
+                                            style={{
+                                                width: "36px",
+                                                height: "36px",
+                                                flexShrink: 0,
+                                            }}
+                                        >
+                                            👤
+                                        </div>
+
+                                        <div className="d-flex flex-column">
+                                            <span className="fw-semibold">
+                                                {username}
+                                            </span>
+
+                                            <small className="text-white-50">
+                                                Welcome back!
+                                            </small>
+                                        </div>
+
+                                    </div>
 
                                 </li>
 
+                                {/* Logout Button */}
                                 <li className="nav-item ms-lg-3 mt-2 mt-lg-0">
 
                                     <button
@@ -117,35 +148,28 @@ function Navbar() {
                                 </li>
 
                             </>
-
                         ) : (
-
                             <>
 
                                 <li className="nav-item">
-
                                     <NavLink
                                         to="/login"
                                         className={navClass}
                                     >
                                         Login
                                     </NavLink>
-
                                 </li>
 
                                 <li className="nav-item">
-
                                     <NavLink
                                         to="/register"
                                         className={navClass}
                                     >
                                         Register
                                     </NavLink>
-
                                 </li>
 
                             </>
-
                         )}
 
                     </ul>
@@ -155,9 +179,7 @@ function Navbar() {
             </div>
 
         </nav>
-
     );
-
 }
 
 export default Navbar;
