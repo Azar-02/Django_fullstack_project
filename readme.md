@@ -18,7 +18,11 @@ Tea Palace allows users to browse tea and snack products, register and log in us
 |---|---|
 | ![](screenshots/login.png) | ![](screenshots/register.png) |
 
-*Add AI Shopping and Floating Assistant screenshots here when available.*
+## 🎥 Project Demo
+
+Watch the complete Tea Palace demonstration:
+
+[YOUR_GITHUB_VIDEO_ATTACHMENT_URL](https://github.com/user-attachments/assets/93935632-369a-47c0-ba5c-847bf942ef28)
 
 ## ✨ Features
 
