@@ -28,6 +28,14 @@ class AddToCartView(APIView):
             id=serializer.validated_data["product_id"],
         )
 
+        if not product.available:
+            return Response(
+                {
+                    "detail": f"{product.name} is currently unavailable."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         cart = get_or_create_cart(request.user)
 
         cart_item, created = CartItem.objects.get_or_create(

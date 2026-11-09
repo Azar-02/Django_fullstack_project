@@ -22,6 +22,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             "price",
             "image",
             "category_name",
+            "available",
         ]
 
 
